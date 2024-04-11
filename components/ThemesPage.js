@@ -1,4 +1,4 @@
-import { setCurrentTheme } from "../services/AddTheme.js";
+import { setCurrentTheme } from "../services/ConfigureTheme.js";
 
 export default class ThemesPage extends HTMLElement {
   constructor() {
@@ -43,15 +43,41 @@ export default class ThemesPage extends HTMLElement {
 
       themes.forEach((theme) => {
         const liTheme = document.createElement("li");
+        liTheme.classList.add("list-group-item", "border", "rounded", "p-2");
         liTheme.id = `theme-item`;
-        liTheme.innerHTML = `
-      <h3>${theme.name}</h3>
-      <ul class="category"></ul>
-      `;
+        liTheme.innerHTML = `<ul class="list-group"></ul>`;
         this.root.querySelector("#themes").appendChild(liTheme);
         const item = document.createElement("theme-item");
         item.dataset.theme = JSON.stringify(theme);
         liTheme.querySelector("ul").appendChild(item);
+      });
+
+      this.root.querySelectorAll("#theme-item").forEach((themeItem) => {
+        const currentTheme = app.store.currentTheme;
+        const theme = JSON.parse(
+          themeItem.querySelector("theme-item").dataset.theme
+        );
+        if (currentTheme.id == theme.id) {
+          themeItem.classList.add("active", "border-success");
+        } else {
+          themeItem.classList.remove("active", "border-success");
+        }
+      });
+
+      window.addEventListener("appcurrentthemechange", () => {
+        const currentTheme = app.store.currentTheme;
+        const themeItems = this.root.querySelectorAll("#theme-item");
+
+        themeItems.forEach((themeItem) => {
+          const theme = JSON.parse(
+            themeItem.querySelector("theme-item").dataset.theme
+          );
+          if (currentTheme.id === theme.id) {
+            themeItem.classList.add("active", "border-success");
+          } else {
+            themeItem.classList.remove("active", "border-success");
+          }
+        });
       });
       this.root
         .querySelector("#newTheme")

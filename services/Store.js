@@ -1,6 +1,5 @@
 const Store = {
   themes: null,
-  themeList: [],
   currentTheme: null,
 };
 
@@ -9,9 +8,6 @@ const proxiedStore = new Proxy(Store, {
     target[property] = value;
     if (property === "themes") {
       window.dispatchEvent(new Event("appthemechange"));
-    }
-    if (property === "themeList") {
-      window.dispatchEvent(new Event("applistchange"));
     }
     if (property === "currentTheme") {
       window.dispatchEvent(new Event("appcurrentthemechange"));

@@ -1,4 +1,7 @@
-import { removeFromthemeList, setCurrentTheme } from "../services/AddTheme.js";
+import {
+  removeFromthemeList,
+  setCurrentTheme,
+} from "../services/ConfigureTheme.js";
 
 export default class ThemeDescription extends HTMLElement {
   constructor() {
@@ -11,60 +14,65 @@ export default class ThemeDescription extends HTMLElement {
 
     this.appendChild(content);
 
-    const currentItemProxy = new Proxy(app.store.currentTheme, {
-      set(target, property, value) {
-        target[property] = value;
-        const removeButton = document
-          .querySelector("themes-page")
-          .root.querySelectorAll("#remove-button");
-
-        removeButton.forEach((button) => {
-          if (value.id == theme.id && theme.id == button.dataset.themeId) {
-            button.setAttribute("disabled", true);
-          } else {
-            button.removeAttribute("disabled");
-          }
-        });
-        return true;
-      },
-    });
-
     const theme = JSON.parse(this.dataset.theme);
-    this.querySelector(
-      ".primary"
-    ).textContent = `Primary: ${theme.colors.primary}`;
-    this.querySelector(
-      ".secondary"
-    ).textContent = `Secondary: ${theme.colors.secondary}`;
-    this.querySelector(
-      ".success"
-    ).textContent = `Success: ${theme.colors.success}`;
-    this.querySelector(
-      ".warning"
-    ).textContent = `Warning: ${theme.colors.warning}`;
-    this.querySelector(
-      ".danger"
-    ).textContent = `Danger: ${theme.colors.danger}`;
+
+    this.querySelector("h3").textContent = theme.name;
+    this.querySelector(".primary").setAttribute(
+      "style",
+      `background-color: ${theme.colors.primary}`
+    );
+    this.querySelector(".secondary").setAttribute(
+      "style",
+      `background-color: ${theme.colors.secondary}`
+    );
+    this.querySelector(".success").setAttribute(
+      "style",
+      `background-color: ${theme.colors.success}`
+    );
+    this.querySelector(".warning").setAttribute(
+      "style",
+      `background-color: ${theme.colors.warning}`
+    );
+    this.querySelector(".danger").setAttribute(
+      "style",
+      `background-color: ${theme.colors.danger}`
+    );
     this.querySelector("a").addEventListener("click", (event) => {
       event.preventDefault();
       app.router.go(`/edit-theme-${theme.id}`);
     });
+    this.querySelector("[role='button']").addEventListener("click", (event) => {
+      if (event.target.tagName.toLowerCase() == "a") {
+        return app.router.go(`/edit-theme-${theme.id}`);
+      }
+      if (event.target.tagName.toLowerCase() == "button") {
+        return removeFromthemeList(theme.id);
+      } else {
+        event.preventDefault();
+        return setCurrentTheme(theme);
+      }
+    });
     this.querySelector("#remove-button").dataset.themeId = theme.id;
     this.querySelectorAll("#remove-button").forEach((button) => {
       if (
-        currentItemProxy.id == theme.id &&
+        app.store.currentTheme.id == theme.id &&
         theme.id == button.dataset.themeId
       ) {
         button.setAttribute("disabled", true);
       }
     });
-    this.querySelector("#remove-button").addEventListener("click", () => {
-      removeFromthemeList(theme.id);
-    });
-    this.querySelector("#use-theme").addEventListener("click", (event) => {
-      event.preventDefault();
-      currentItemProxy.theme = { ...theme };
-      setCurrentTheme(theme);
+
+    window.addEventListener("appcurrentthemechange", () => {
+      const currentTheme = app.store.currentTheme;
+      const removeButtons = this.querySelectorAll("#remove-button");
+
+      removeButtons.forEach((button) => {
+        if (currentTheme.id == theme.id) {
+          button.setAttribute("disabled", true);
+        } else {
+          button.removeAttribute("disabled");
+        }
+      });
     });
   }
 }

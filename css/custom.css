@@ -11862,6 +11862,40 @@ p {
   color: var(--secondary);
 }
 
+.primary {
+  background-color: var(--primary);
+}
+
+.secondary {
+  background-color: var(--secondary);
+}
+
+.success {
+  background-color: var(--success);
+}
+
+.danger {
+  background-color: var(--danger);
+}
+
+.warning {
+  background-color: var(--warning);
+}
+
+.primary,
+.secondary,
+.success,
+.danger,
+.warning {
+  width: 40px;
+  height: 40px;
+}
+
+.btn:disabled {
+  --bs-btn-disabled-color: var(--secondary);
+  --bs-btn-disabled-border-color: var(--secondary);
+}
+
 .btn-primary {
   --bs-btn-active-border-color: var(--primary);
   --bs-btn-active-bg: var(--primary);
@@ -11905,6 +11939,55 @@ p {
 }
 .btn-danger:active {
   filter: brightness(90%);
+}
+
+.btn-outline-danger {
+  --bs-btn-color: var(--danger);
+  --bs-btn-border-color: var(--danger);
+  --bs-btn-hover-bg: var(--danger);
+  --bs-btn-hover-border-color: var(--danger);
+  --bs-btn-active-bg: var(--danger);
+  --bs-btn-active-border-color: var(--danger);
+  --bs-btn-disabled-border-color: var(--danger);
+  --bs-btn-disabled-color: var(--danger);
+}
+
+.border-primary {
+  border-color: var(--primary) !important;
+}
+
+.border-secondary {
+  border-color: var(--secondary) !important;
+}
+
+.border-danger {
+  border-color: var(--danger) !important;
+}
+
+.border-success {
+  border-color: var(--success) !important;
+}
+
+.list-group-item.active {
+  background-color: #ffffff;
+}
+
+input[type=color] {
+  -webkit-appearance: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+}
+
+input[type=color]::-webkit-color-swatch-wrapper {
+  padding: 0;
+  background-color: #ffffff;
+  border: none;
+}
+
+input[type=color]::-webkit-color-swatch {
+  border-radius: 50%;
+  border: none;
 }
 
 /*# sourceMappingURL=custom.css.map */

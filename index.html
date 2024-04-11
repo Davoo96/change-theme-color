@@ -15,53 +15,100 @@
       <section
         class="d-flex flex-column p-4 gap-4 py-md-5 align-items-center justify-content-center"
       >
-        <div id="search">
-          <label for="searchInput">Procure tema pelo nome</label>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Digite o nome do tema"
-          />
+        <div
+          class="w-100 vw d-flex flex-md-row flex-column align-items-baseline align-items-md-center justify-content-between pb-4 border-bottom"
+        >
+          <h1>Selecione um tema</h1>
+
+          <div
+            class="d-flex flex-md-row flex-column align-items-md-center align-items-baseline gap-4"
+          >
+            <div id="search">
+              <label for="searchInput"></label>
+              <input
+                id="searchInput"
+                type="text"
+                placeholder="Buscar tema"
+                class="p-2"
+              />
+            </div>
+            <a id="newTheme" class="btn btn-primary" href="#">
+              Adicionar novo tema
+            </a>
+          </div>
         </div>
-        <h1>Selecione seu tema de preferênica</h1>
         <ul
           id="themes"
-          class="list-group list-group-checkable d-grid gap-2 border-0"
+          class="list-group d-flex flex-column flex-md-row flex-wrap gap-4 border-0"
         ></ul>
-        <a id="newTheme" class="btn btn-primary rounded-pill" href="#">
-          Adicionar novo tema
-        </a>
       </section>
     </template>
 
     <template id="theme-description-template">
       <section>
-        <div>
-          <p class="primary"></p>
-          <p class="secondary"></p>
-          <p class="success"></p>
-          <p class="danger"></p>
-          <p class="warning"></p>
-          <a href="#">Editar tema</a>
-          <button id="remove-button" class="btn btn-danger">Remover</button>
+        <div
+          role="button"
+          class="d-flex flex-column align-items-baseline justify-content-center"
+        >
+          <h3 class="border-bottom w-100"></h3>
+          <div
+            class="d-flex flex-row p-4 gap-1 align-items-center justify-content-center"
+          >
+            <span class="primary d-block rounded-circle"></span>
+            <span class="secondary d-block rounded-circle"></span>
+            <span class="success d-block rounded-circle"></span>
+            <span class="danger d-block rounded-circle"></span>
+            <span class="warning d-block rounded-circle"></span>
+          </div>
+          <a href="#" class="btn btn-primary w-100 mb-1">Editar tema</a>
+          <button id="remove-button" class="btn btn-outline-danger w-100">
+            Remover
+          </button>
         </div>
-
-        <button id="use-theme" class="btn btn-secondary rounded-pill">
-          Usar este tema
-        </button>
       </section>
     </template>
 
     <template id="edit-theme-template">
-      <a href="#" onclick="app.router.go('/'); event.preventDefault()"
-        >&lt; Back</a
+      <a
+        class="btn btn-primary w-25 align-self-md-end"
+        href="#"
+        onclick="app.router.go('/'); event.preventDefault()"
+        >Voltar</a
       >
-      <form></form>
-      <p>Primary test</p>
-      <p>Secondary test</p>
-      <p>Success test</p>
-      <p>Danger test</p>
-      <p>Warning test</p>
+      <div
+        class="d-flex flex-md-row flex-column flex-wrap align-items-center justify-content-center gap-5"
+      >
+        <form class="d-flex flex-column"></form>
+
+        <section
+          class="list-group d-flex flex-column flex-md-row flex-wrap gap-4 border-0"
+        >
+          <div
+            role="button"
+            class="d-flex flex-column align-items-baseline justify-content-center"
+          >
+            <h3 class="border-bottom w-100"></h3>
+            <div
+              class="d-flex flex-row p-4 gap-1 align-items-center justify-content-center"
+            >
+              <span class="primary d-block rounded-circle"></span>
+              <span class="secondary d-block rounded-circle"></span>
+              <span class="success d-block rounded-circle"></span>
+              <span class="danger d-block rounded-circle"></span>
+              <span class="warning d-block rounded-circle"></span>
+            </div>
+            <a href="#" class="btn btn-primary w-100 mb-1 pe-none"
+              >Editar tema</a
+            >
+            <button
+              id="remove-button"
+              class="btn btn-outline-danger w-100 pe-none"
+            >
+              Remover
+            </button>
+          </div>
+        </section>
+      </div>
     </template>
 
     <script

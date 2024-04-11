@@ -1,7 +1,3 @@
-export function placeOrder() {
-  app.store.themes = [];
-}
-
 function editTheme(themeId, updatedTheme) {
   const index = app.store.themes.findIndex((theme) => theme.id == themeId);
   if (index !== -1) {
@@ -9,12 +5,17 @@ function editTheme(themeId, updatedTheme) {
     const mergedTheme = mergeThemes(currentTheme, updatedTheme);
 
     app.store.themes[index] = mergedTheme;
+
+    if (app.store.currentTheme.id == mergedTheme.id) {
+      setCurrentTheme(mergedTheme);
+    }
   } else {
     console.error(`Theme with id ${themeId} not found.`);
   }
 }
 
 function mergeThemes(currentTheme, updatedTheme) {
+  console.log(currentTheme);
   const mergedTheme = { ...currentTheme };
 
   for (const key in updatedTheme) {
