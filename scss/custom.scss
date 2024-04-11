@@ -1,0 +1,66 @@
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+$primary: var(--primary);
+$secondary: var(--secondary);
+$success: var(--success);
+$danger: var(--danger);
+$warning: var(--warning);
+$hover: var(--hover);
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $primary;
+}
+
+p {
+  color: $secondary;
+}
+
+.btn-primary {
+  --bs-btn-active-border-color: var(--primary);
+  --bs-btn-active-bg: var(--primary);
+  --bs-btn-hover-border-color: var(--primary);
+  --bs-btn-border-color: var(--primary);
+  --bs-btn-bg: var(--primary);
+  &:hover {
+    background-color: $primary;
+    filter: brightness(120%);
+  }
+  &:active {
+    filter: brightness(90%);
+  }
+}
+
+.btn-secondary {
+  --bs-btn-active-border-color: var(--secondary);
+  --bs-btn-active-bg: var(--secondary);
+  --bs-btn-hover-border-color: var(--secondary);
+  --bs-btn-border-color: var(--secondary);
+  --bs-btn-bg: var(--secondary);
+  &:hover {
+    background-color: $secondary;
+    filter: brightness(120%);
+  }
+  &:active {
+    filter: brightness(90%);
+  }
+}
+
+.btn-danger {
+  --bs-btn-active-border-color: var(--danger);
+  --bs-btn-active-bg: var(--danger);
+  --bs-btn-hover-border-color: var(--danger);
+  --bs-btn-border-color: var(--danger);
+  --bs-btn-bg: var(--danger);
+  &:hover {
+    background-color: $danger;
+    filter: brightness(120%);
+  }
+  &:active {
+    filter: brightness(90%);
+  }
+}
