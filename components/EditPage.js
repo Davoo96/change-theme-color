@@ -9,6 +9,8 @@ export default class EditPage extends HTMLElement {
     newTheme: true,
   };
 
+  #error = null;
+
   constructor() {
     super();
 
@@ -60,6 +62,18 @@ export default class EditPage extends HTMLElement {
     const content = template.content.cloneNode(true);
     section.appendChild(content);
 
+    window.addEventListener("apperror", () => {
+      this.#error = app.store.error;
+      const hasErrorMessage = section.querySelector(".text-danger");
+      if (hasErrorMessage) {
+        hasErrorMessage.remove();
+      }
+      const errorMessage = document.createElement("p");
+      errorMessage.textContent = this.#error;
+      errorMessage.classList.add("text-danger");
+      section.appendChild(errorMessage);
+    });
+
     section.querySelector("form").innerHTML = `
       <label for="name">Nome do tema</label>
       <input name="name" id="name" required value="${
@@ -85,7 +99,8 @@ export default class EditPage extends HTMLElement {
       <input name="danger" id="danger" ${
         theme.id === "" ? "required" : ""
       } type="color" value="${theme.colors.danger ?? "#000000"}" />
-      <button type="submit" class="btn btn-primary">Salvar</button>`;
+      <button type="submit" class="btn btn-primary">Salvar</button>
+      `;
 
     this.root.querySelector("h3").textContent = "Tema de exemplo";
 
@@ -96,7 +111,13 @@ export default class EditPage extends HTMLElement {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
       if (Object.keys(this.#theme.colors).length < 5 && this.#theme.newTheme) {
-        return alert("Preencha todos os campos");
+        return (app.store.error = "Preencha todas as cores do novo tema.");
+      }
+      const themeNameExists = app.store.themes.find(
+        (theme) => theme.name === this.#theme.name
+      );
+      if (themeNameExists && this.#theme.newTheme) {
+        return (app.store.error = "Nome do tema já existe.");
       }
       addToList(this.#theme);
       app.router.go(`/`);

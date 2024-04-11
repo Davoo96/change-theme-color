@@ -15,7 +15,6 @@ function editTheme(themeId, updatedTheme) {
 }
 
 function mergeThemes(currentTheme, updatedTheme) {
-  console.log(currentTheme);
   const mergedTheme = { ...currentTheme };
 
   for (const key in updatedTheme) {
